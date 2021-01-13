@@ -6,6 +6,16 @@ String getLanguage(BuildContext context) {
 }
 
 Map<String, Map<String, String>> getTranslation = {
-  "en": {"Welcome": "Welcome", "Start": "Start", "Loading": "Loading"},
-  "es": {"Welcome": "Bienvenido", "Start": "Comenzar", "Loading": "Cargando"}
+  "en": {
+    "Welcome": "Welcome",
+    "Start": "Start",
+    "Loading": "Loading",
+    "Plays": "Plays"
+  },
+  "es": {
+    "Welcome": "Bienvenido",
+    "Start": "Comenzar",
+    "Loading": "Cargando",
+    "Plays": "Jugadas"
+  }
 };
