@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numeracion_maya/models_class/numbers.dart';
 import 'package:numeracion_maya/utilitys/languages.dart';
+import 'package:numeracion_maya/utilitys/methods/public.dart';
 
 class MainMenu extends StatefulWidget {
   @override
@@ -161,6 +162,6 @@ class _MainMenuState extends State<MainMenu> {
           num: Random().nextInt(201),
           type: TypeNumber.values[Random().nextInt(2)]));
     }
-    print(numList);
+    snackMessage(message: numList.toString(), scaffoldKey: _scaffoldKey);
   }
 }
