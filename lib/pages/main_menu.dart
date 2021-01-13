@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:button3d/button3d.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:numeracion_maya/models_class/numbers.dart';
 import 'package:numeracion_maya/utilitys/languages.dart';
 
 class MainMenu extends StatefulWidget {
@@ -110,7 +113,7 @@ class _MainMenuState extends State<MainMenu> {
             z: 13,
             tappedZ: 5,
             borderRadius: BorderRadius.circular(25)),
-        onPressed: () {},
+        onPressed: _generatePlays,
         child: Padding(
           padding: EdgeInsets.all(15),
           child: Row(
@@ -149,5 +152,15 @@ class _MainMenuState extends State<MainMenu> {
         ),
       ),
     );
+  }
+
+  void _generatePlays() {
+    List<Numbers> numList = [];
+    while (numList.length != _count) {
+      numList.add(Numbers(
+          num: Random().nextInt(201),
+          type: TypeNumber.values[Random().nextInt(2)]));
+    }
+    print(numList);
   }
 }

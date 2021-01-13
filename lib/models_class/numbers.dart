@@ -7,4 +7,9 @@ class Numbers {
   final TypeNumber type;
 
   Numbers({@required this.num, @required this.type});
+
+  @override
+  String toString() {
+    return '\nNumbers{num: $num, type: ${type.toString().split(".").last}}';
+  }
 }
