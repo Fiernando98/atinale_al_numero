@@ -4,8 +4,10 @@ import 'package:button3d/button3d.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numeracion_maya/models_class/numbers.dart';
+import 'package:numeracion_maya/pages/play_page.dart';
 import 'package:numeracion_maya/utilitys/languages.dart';
-import 'package:numeracion_maya/utilitys/methods/public.dart';
+import 'package:numeracion_maya/utilitys/providers/plays_providers.dart';
+import 'package:provider/provider.dart';
 
 class MainMenu extends StatefulWidget {
   @override
@@ -41,7 +43,7 @@ class _MainMenuState extends State<MainMenu> {
       style: Button3dStyle(
           topColor: Colors.red[400],
           backColor: Colors.red[700],
-          z: 13,
+          z: 10,
           tappedZ: 5,
           borderRadius: BorderRadius.circular(25)),
       onPressed: () {
@@ -84,7 +86,7 @@ class _MainMenuState extends State<MainMenu> {
       style: Button3dStyle(
           topColor: Colors.teal[600],
           backColor: Colors.teal[800],
-          z: 13,
+          z: 10,
           tappedZ: 5,
           borderRadius: BorderRadius.circular(25)),
       onPressed: () {
@@ -111,7 +113,7 @@ class _MainMenuState extends State<MainMenu> {
         style: Button3dStyle(
             topColor: Colors.blueAccent[200],
             backColor: Colors.blueAccent[400],
-            z: 13,
+            z: 10,
             tappedZ: 5,
             borderRadius: BorderRadius.circular(25)),
         onPressed: _generatePlays,
@@ -144,24 +146,30 @@ class _MainMenuState extends State<MainMenu> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [_containerCountPlays(), _buttonStart()],
+    return SafeArea(
+      child: Scaffold(
+        key: _scaffoldKey,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [_containerCountPlays(), _buttonStart()],
+          ),
         ),
       ),
     );
   }
 
   void _generatePlays() {
-    List<Numbers> numList = [];
-    while (numList.length != _count) {
-      numList.add(Numbers(
+    List<Numbers> playsList = [];
+    while (playsList.length != _count) {
+      playsList.add(Numbers(
           num: Random().nextInt(201),
           type: TypeNumber.values[Random().nextInt(2)]));
     }
-    snackMessage(message: numList.toString(), scaffoldKey: _scaffoldKey);
+    context.read<PlaysProvider>().makePlays(newList: playsList);
+
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => PlayPage()),
+    );
   }
 }

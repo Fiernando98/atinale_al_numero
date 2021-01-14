@@ -33,18 +33,20 @@ class _SplashScreenState extends State<SplashScreen> {
     if (isFirst) {
       validateStart();
     }
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 100,
-              height: 100,
-              child: CircularProgressIndicator(strokeWidth: 5),
-            ),
-            _messageWidget()
-          ],
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 100,
+                height: 100,
+                child: CircularProgressIndicator(strokeWidth: 5),
+              ),
+              _messageWidget()
+            ],
+          ),
         ),
       ),
     );
