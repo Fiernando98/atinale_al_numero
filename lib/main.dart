@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:numeracion_maya/pages/splash_screen.dart';
+import 'package:numeracion_maya/pages/main_menu.dart';
 import 'package:numeracion_maya/utilitys/providers/plays_providers.dart';
 import 'package:provider/provider.dart';
 
@@ -38,6 +38,6 @@ class MyApp extends StatelessWidget {
           primaryColor: Colors.purple[800],
           accentColor: Colors.deepPurpleAccent[700],
         ),
-        home: SplashScreen());
+        home: MainMenu());
   }
 }

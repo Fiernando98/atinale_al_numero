@@ -41,11 +41,11 @@ class _MainMenuState extends State<MainMenu> {
       width: 70,
       height: 70,
       style: Button3dStyle(
-          topColor: Colors.red[400],
-          backColor: Colors.red[700],
+          topColor: Colors.deepOrange[400],
+          backColor: Colors.deepOrange[800],
           z: 10,
           tappedZ: 5,
-          borderRadius: BorderRadius.circular(25)),
+          borderRadius: BorderRadius.circular(30)),
       onPressed: () {
         if (_count > 1)
           setState(() {
@@ -57,7 +57,7 @@ class _MainMenuState extends State<MainMenu> {
         child: Icon(
           Icons.exposure_minus_1,
           color: Colors.white,
-          size: 23,
+          size: 28,
         ),
       ),
     );
@@ -84,11 +84,11 @@ class _MainMenuState extends State<MainMenu> {
       width: 70,
       height: 70,
       style: Button3dStyle(
-          topColor: Colors.teal[600],
-          backColor: Colors.teal[800],
+          topColor: Colors.amber[600],
+          backColor: Colors.amber[800],
           z: 10,
           tappedZ: 5,
-          borderRadius: BorderRadius.circular(25)),
+          borderRadius: BorderRadius.circular(30)),
       onPressed: () {
         setState(() {
           _count++;
@@ -99,7 +99,7 @@ class _MainMenuState extends State<MainMenu> {
         child: Icon(
           Icons.exposure_plus_1,
           color: Colors.white,
-          size: 23,
+          size: 28,
         ),
       ),
     );
@@ -115,7 +115,7 @@ class _MainMenuState extends State<MainMenu> {
             backColor: Colors.blueAccent[400],
             z: 10,
             tappedZ: 5,
-            borderRadius: BorderRadius.circular(25)),
+            borderRadius: BorderRadius.circular(30)),
         onPressed: _generatePlays,
         child: Padding(
           padding: EdgeInsets.all(15),
