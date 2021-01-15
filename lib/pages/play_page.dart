@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numeracion_maya/models_class/maya_number.dart';
 import 'package:numeracion_maya/models_class/numbers.dart';
+import 'package:numeracion_maya/utilitys/bottomsheets/bottomsheet_close_page.dart';
 import 'package:numeracion_maya/utilitys/items/arabigo_number_item.dart';
 import 'package:numeracion_maya/utilitys/items/maya_number_item.dart';
 import 'package:numeracion_maya/utilitys/methods/public.dart';
@@ -16,7 +17,8 @@ class PlayPage extends StatefulWidget {
 class _PlayPageState extends State<PlayPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  List<int> inputListNum = [];
+  List<int> inputListNumArabigo = [];
+  List<List<int>> inputListNumMaya = [];
 
   Widget _widgetNumber() {
     return Expanded(
@@ -140,9 +142,9 @@ class _PlayPageState extends State<PlayPage> {
             return ArabigoNumberItem(
                 number: number,
                 onTap: () {
-                  if (inputListNum.length < 10)
+                  if (inputListNumArabigo.length < 10)
                     setState(() {
-                      inputListNum.add(number);
+                      inputListNumArabigo.add(number);
                     });
                 });
           }).toList()),
@@ -159,9 +161,9 @@ class _PlayPageState extends State<PlayPage> {
               return MayaNumberItem(
                   number: number,
                   onTap: () {
-                    if (inputListNum.length < 10)
+                    if (inputListNumArabigo.length < 10)
                       setState(() {
-                        inputListNum.add(number);
+                        inputListNumArabigo.add(number);
                       });
                   });
             }).toList()));
@@ -173,13 +175,17 @@ class _PlayPageState extends State<PlayPage> {
             .playsList[context.watch<PlaysProvider>().answersList.length]
             .type ==
         TypeNumber.Maya) {
-      return _arabigoNumbers();
+      return Column(
+        children: [_inputNumberArabigo(), _arabigoNumbers()],
+      );
     } else {
-      return _mayaNumbers();
+      return Column(
+        children: [_mayaNumbers()],
+      );
     }
   }
 
-  Widget _inputNumber() {
+  Widget _inputNumberArabigo() {
     return Container(
       margin: EdgeInsets.all(15),
       padding: EdgeInsets.all(10),
@@ -190,7 +196,7 @@ class _PlayPageState extends State<PlayPage> {
         children: [
           Expanded(
               child: Text(
-            "${inputListNum.join()}",
+            "${inputListNumArabigo.join()}",
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 40,
@@ -201,7 +207,7 @@ class _PlayPageState extends State<PlayPage> {
               iconSize: 30,
               onPressed: () {
                 setState(() {
-                  inputListNum.removeLast();
+                  inputListNumArabigo.removeLast();
                 });
               })
         ],
@@ -219,7 +225,6 @@ class _PlayPageState extends State<PlayPage> {
             thickness: 2,
             color: Colors.grey,
           ),
-          _inputNumber(),
           _numWidget()
         ],
       );
@@ -234,7 +239,7 @@ class _PlayPageState extends State<PlayPage> {
           ),
           Expanded(
               child: Column(
-            children: [_inputNumber(), _numWidget()],
+            children: [_numWidget()],
           ))
         ],
       );
@@ -243,13 +248,29 @@ class _PlayPageState extends State<PlayPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        key: _scaffoldKey,
-        body: Center(
-          child: _bodyPlay(),
-        ),
-      ),
-    );
+    return WillPopScope(
+        onWillPop: _dialogClosePage,
+        child: SafeArea(
+          child: Scaffold(
+            key: _scaffoldKey,
+            body: Stack(
+              children: [
+                _bodyPlay(),
+                IconButton(
+                    icon: Icon(Icons.close),
+                    onPressed: Navigator.of(context).maybePop)
+              ],
+            ),
+          ),
+        ));
+  }
+
+  Future<bool> _dialogClosePage() async {
+    return await showModalBottomSheet<bool>(
+            context: context,
+            elevation: 50,
+            backgroundColor: Colors.transparent,
+            builder: (context) => BottomSheetClosePage()) ??
+        false;
   }
 }
