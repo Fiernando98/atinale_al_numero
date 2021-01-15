@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:numeracion_maya/models_class/maya_number.dart';
 import 'package:numeracion_maya/models_class/numbers.dart';
-import 'package:numeracion_maya/utilitys/items/arabigo_number.dart';
-import 'package:numeracion_maya/utilitys/items/maya_number.dart';
+import 'package:numeracion_maya/utilitys/items/arabigo_number_item.dart';
+import 'package:numeracion_maya/utilitys/items/maya_number_item.dart';
+import 'package:numeracion_maya/utilitys/methods/public.dart';
 import 'package:numeracion_maya/utilitys/providers/plays_providers.dart';
 import 'package:provider/provider.dart';
 
@@ -19,11 +21,31 @@ class _PlayPageState extends State<PlayPage> {
   Widget _widgetNumber() {
     return Container(
       margin: EdgeInsets.all(25),
-      child: Text(
-        "${context.watch<PlaysProvider>().playsList[context.watch<PlaysProvider>().answersList.length].num}",
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 80),
-      ),
+      child: context
+                  .watch<PlaysProvider>()
+                  .playsList[context.watch<PlaysProvider>().answersList.length]
+                  .type ==
+              TypeNumber.Arabigo
+          ? _numberArabigo()
+          : _numberMaya(),
     );
+  }
+
+  Widget _numberArabigo() {
+    return Text(
+      "${context.watch<PlaysProvider>().playsList[context.watch<PlaysProvider>().answersList.length].num}",
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 80),
+    );
+  }
+
+  Widget _numberMaya() {
+    MayaNumber mayaNumber = getMayaNumber(
+        num: context
+            .watch<PlaysProvider>()
+            .playsList[context.watch<PlaysProvider>().answersList.length]
+            .num);
+    print(mayaNumber.toString());
+    return Column();
   }
 
   Widget _arabigoNumbers() {
@@ -31,7 +53,7 @@ class _PlayPageState extends State<PlayPage> {
         spacing: 7,
         runSpacing: 7,
         children: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((number) {
-          return ArabigoNumber(
+          return ArabigoNumberItem(
               number: number,
               onTap: () {
                 if (inputListNum.length < 10)
@@ -47,7 +69,7 @@ class _PlayPageState extends State<PlayPage> {
         spacing: 15,
         runSpacing: 15,
         children: [0, 1, 5].map((number) {
-          return MayaNumber(
+          return MayaNumberItem(
               number: number,
               onTap: () {
                 if (inputListNum.length < 10)
@@ -87,16 +109,14 @@ class _PlayPageState extends State<PlayPage> {
                 fontSize: 40,
                 fontStyle: FontStyle.italic),
           )),
-          inputListNum.isNotEmpty
-              ? IconButton(
-                  icon: Icon(Icons.backspace),
-                  iconSize: 30,
-                  onPressed: () {
-                    setState(() {
-                      inputListNum.removeLast();
-                    });
-                  })
-              : Container()
+          IconButton(
+              icon: Icon(Icons.backspace),
+              iconSize: 30,
+              onPressed: () {
+                setState(() {
+                  inputListNum.removeLast();
+                });
+              })
         ],
       ),
     );

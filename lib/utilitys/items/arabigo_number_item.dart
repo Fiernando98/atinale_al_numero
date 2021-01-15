@@ -2,11 +2,11 @@ import 'package:button3d/button3d.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ArabigoNumber extends StatelessWidget {
+class ArabigoNumberItem extends StatelessWidget {
   final int number;
   final Function onTap;
 
-  ArabigoNumber({@required this.number, @required this.onTap});
+  ArabigoNumberItem({@required this.number, @required this.onTap});
 
   @override
   Widget build(BuildContext context) {
