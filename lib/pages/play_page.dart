@@ -14,12 +14,31 @@ class PlayPage extends StatefulWidget {
 class _PlayPageState extends State<PlayPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  List<int> inputListNum = [];
+
+  Widget _widgetNumber() {
+    return Container(
+      margin: EdgeInsets.all(25),
+      child: Text(
+        "${context.watch<PlaysProvider>().playsList[context.watch<PlaysProvider>().answersList.length].num}",
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 80),
+      ),
+    );
+  }
+
   Widget _arabigoNumbers() {
     return Wrap(
         spacing: 7,
         runSpacing: 7,
-        children: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) {
-          return ArabigoNumber(number: number, onTap: () {});
+        children: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((number) {
+          return ArabigoNumber(
+              number: number,
+              onTap: () {
+                if (inputListNum.length < 10)
+                  setState(() {
+                    inputListNum.add(number);
+                  });
+              });
         }).toList());
   }
 
@@ -28,7 +47,14 @@ class _PlayPageState extends State<PlayPage> {
         spacing: 15,
         runSpacing: 15,
         children: [0, 1, 5].map((number) {
-          return MayaNumber(number: number, onTap: () {});
+          return MayaNumber(
+              number: number,
+              onTap: () {
+                if (inputListNum.length < 10)
+                  setState(() {
+                    inputListNum.add(number);
+                  });
+              });
         }).toList());
   }
 
@@ -37,30 +63,75 @@ class _PlayPageState extends State<PlayPage> {
             .watch<PlaysProvider>()
             .playsList[context.watch<PlaysProvider>().answersList.length]
             .type ==
-        TypeNumber.Arabigo) {
+        TypeNumber.Maya) {
       return _arabigoNumbers();
     } else {
       return _mayaNumbers();
     }
   }
 
-  Widget _widgetNumber() {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          margin: EdgeInsets.all(20),
-          child: Text(
-            "${context.watch<PlaysProvider>().playsList[context.watch<PlaysProvider>().answersList.length].num}",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 80),
-          ),
-        ),
-        Divider(
-          thickness: 2,
-          color: Colors.grey,
-        )
-      ],
+  Widget _inputNumber() {
+    return Container(
+      margin: EdgeInsets.all(15),
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey, width: 3),
+          borderRadius: BorderRadius.circular(20)),
+      child: Row(
+        children: [
+          Expanded(
+              child: Text(
+            "${inputListNum.join()}",
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 40,
+                fontStyle: FontStyle.italic),
+          )),
+          inputListNum.isNotEmpty
+              ? IconButton(
+                  icon: Icon(Icons.backspace),
+                  iconSize: 30,
+                  onPressed: () {
+                    setState(() {
+                      inputListNum.removeLast();
+                    });
+                  })
+              : Container()
+        ],
+      ),
     );
+  }
+
+  Widget _bodyPlay() {
+    if (MediaQuery.of(context).orientation == Orientation.portrait) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          _widgetNumber(),
+          Divider(
+            thickness: 2,
+            color: Colors.grey,
+          ),
+          _inputNumber(),
+          _numWidget()
+        ],
+      );
+    } else {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          _widgetNumber(),
+          VerticalDivider(
+            thickness: 2,
+            color: Colors.grey,
+          ),
+          Expanded(
+              child: Column(
+            children: [_inputNumber(), _numWidget()],
+          ))
+        ],
+      );
+    }
   }
 
   @override
@@ -69,10 +140,7 @@ class _PlayPageState extends State<PlayPage> {
       child: Scaffold(
         key: _scaffoldKey,
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [_widgetNumber(), _numWidget()],
-          ),
+          child: _bodyPlay(),
         ),
       ),
     );
