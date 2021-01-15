@@ -28,11 +28,27 @@ void snackErrorMessage(
   ScaffoldMessenger.of(scaffoldKey.currentContext).showSnackBar(snackBar);
 }
 
-MayaNumber getMayaNumber({@required int num}) {
+MayaNumber convertirMaya({int num}) {
+  List<int> x8000 = [];
+  List<int> x400 = [];
   List<int> x20 = [];
   List<int> x = [];
 
   int _numCalc = num;
+
+  if (_numCalc ~/ (5 * 400) >= 1) {
+    for (int i = 0; i < _numCalc ~/ (5 * 400).toInt(); i++) {
+      x400.add(5);
+    }
+    _numCalc = _numCalc % (5 * 400);
+  }
+  if (_numCalc ~/ (1 * 400) >= 1) {
+    for (int i = 0; i < _numCalc ~/ (1 * 400); i++) {
+      x400.add(1);
+    }
+    _numCalc = _numCalc % (1 * 400);
+  }
+
   if (_numCalc ~/ (5 * 20) >= 1) {
     for (int i = 0; i < _numCalc ~/ (5 * 20).toInt(); i++) {
       x20.add(5);
@@ -58,6 +74,34 @@ MayaNumber getMayaNumber({@required int num}) {
     }
     _numCalc = _numCalc % (1);
   }
+
+  if (x400.isEmpty && x8000.isNotEmpty) x400.add(0);
+  if (x20.isEmpty && x400.isNotEmpty) x20.add(0);
   if (x.isEmpty) x.add(0);
-  return MayaNumber(x20: x20, x: x);
+  return MayaNumber(x8000: x8000, x400: x400, x20: x20, x: x);
+}
+
+MayaNumber getMayaNumber({@required int num}) {
+  List<List<int>> listResults = [];
+  int index = 0;
+  for (int multi in [8000, 400, 20, 1]) {
+    List<int> results = [];
+    for (int value in [5, 1]) {
+      if (num ~/ (value * multi) >= 1) {
+        for (int i = 0; i < num ~/ (value * multi).toInt(); i++) {
+          results.add(value);
+        }
+        num = num % (value * multi);
+      }
+    }
+    if (results.isEmpty && index > 0 && listResults[index - 1].isNotEmpty)
+      results.add(0);
+    listResults.add(results);
+    index++;
+  }
+  return MayaNumber(
+      x8000: listResults[0],
+      x400: listResults[1],
+      x20: listResults[2],
+      x: listResults[3]);
 }

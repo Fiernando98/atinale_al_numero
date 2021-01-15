@@ -163,7 +163,7 @@ class _MainMenuState extends State<MainMenu> {
     List<Numbers> playsList = [];
     while (playsList.length != _count) {
       playsList.add(Numbers(
-          num: Random().nextInt(201),
+          num: Random().nextInt(100000),
           type: TypeNumber.values[Random().nextInt(2)]));
     }
     context.read<PlaysProvider>().makePlays(newList: playsList);
