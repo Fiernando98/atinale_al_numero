@@ -45,7 +45,22 @@ class _PlayPageState extends State<PlayPage> {
             .playsList[context.watch<PlaysProvider>().answersList.length]
             .num);
     print(mayaNumber.toString());
-    return Column();
+    List<Widget> widgetsList = [];
+    if (mayaNumber.x20.isNotEmpty) {
+      widgetsList.add(Divider(
+        thickness: 1,
+        color: Colors.grey,
+      ));
+    }
+    if (mayaNumber.x.isNotEmpty) {
+      widgetsList.add(Divider(
+        thickness: 1,
+        color: Colors.grey,
+      ));
+    }
+    return Column(
+      children: widgetsList,
+    );
   }
 
   Widget _arabigoNumbers() {
