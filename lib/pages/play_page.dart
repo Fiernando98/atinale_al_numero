@@ -20,21 +20,31 @@ class _PlayPageState extends State<PlayPage> {
 
   Widget _widgetNumber() {
     return Expanded(
-        child: Container(
-      margin: EdgeInsets.all(context
-                  .watch<PlaysProvider>()
-                  .playsList[context.watch<PlaysProvider>().answersList.length]
-                  .type ==
-              TypeNumber.Arabigo
-          ? 25
-          : 10),
-      child: context
-                  .watch<PlaysProvider>()
-                  .playsList[context.watch<PlaysProvider>().answersList.length]
-                  .type ==
-              TypeNumber.Arabigo
-          ? _numberArabigo()
-          : _numberMaya(),
+        child: CustomScrollView(
+      physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+      slivers: [
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: Container(
+            margin: EdgeInsets.all(context
+                        .watch<PlaysProvider>()
+                        .playsList[
+                            context.watch<PlaysProvider>().answersList.length]
+                        .type ==
+                    TypeNumber.Arabigo
+                ? 25
+                : 10),
+            child: context
+                        .watch<PlaysProvider>()
+                        .playsList[
+                            context.watch<PlaysProvider>().answersList.length]
+                        .type ==
+                    TypeNumber.Arabigo
+                ? _numberArabigo()
+                : _numberMaya(),
+          ),
+        )
+      ],
     ));
   }
 
@@ -53,7 +63,6 @@ class _PlayPageState extends State<PlayPage> {
             .watch<PlaysProvider>()
             .playsList[context.watch<PlaysProvider>().answersList.length]
             .num);
-    print(mayaNumber.toString());
     List<Widget> widgetsList = [];
     for (List<int> list in [
       mayaNumber.x8000,
@@ -63,25 +72,43 @@ class _PlayPageState extends State<PlayPage> {
     ]) {
       if (list.isNotEmpty) {
         List<Widget> xList = [];
-        for (int value in list) {
-          String iconPath;
-          double height = 10;
-          switch (value) {
-            case 0:
-              iconPath = "assets/cero_maya.png";
-              height = 20;
-              break;
-            case 1:
-              iconPath = "assets/uno_maya.png";
-              break;
-            case 5:
-              iconPath = "assets/cinco_maya.png";
-              break;
+        if (list.contains(1)) {
+          List<Widget> rowsList = [];
+          for (int value in list.where((element) => element == 1).toList()) {
+            rowsList.add(Container(
+              margin: EdgeInsets.all(3),
+              child: Image.asset("assets/uno_maya.png",
+                  height: 15,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white
+                      : Colors.black),
+            ));
           }
           xList.add(Container(
             margin: EdgeInsets.all(3),
-            child: Image.asset(iconPath,
-                height: height,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: rowsList,
+            ),
+          ));
+        }
+        if (list.contains(5)) {
+          for (int value in list.where((element) => element == 5).toList()) {
+            xList.add(Container(
+              margin: EdgeInsets.all(3),
+              child: Image.asset("assets/cinco_maya.png",
+                  height: 12,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white
+                      : Colors.black),
+            ));
+          }
+        }
+        if (list.contains(0)) {
+          xList.add(Container(
+            margin: EdgeInsets.all(3),
+            child: Image.asset("assets/cero_maya.png",
+                height: 25,
                 color: Theme.of(context).brightness == Brightness.dark
                     ? Colors.white
                     : Colors.black),
