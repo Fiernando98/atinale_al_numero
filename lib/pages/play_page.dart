@@ -25,31 +25,31 @@ class _PlayPageState extends State<PlayPage> {
   Widget _widgetNumber() {
     return Expanded(
         child: CustomScrollView(
-          physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-          slivers: [
-            SliverFillRemaining(
-              hasScrollBody: false,
-              child: Container(
-                margin: EdgeInsets.all(context
-                    .watch<PlaysProvider>()
-                    .playsList[
-                context.watch<PlaysProvider>().answersList.length]
-                    .type ==
+      physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+      slivers: [
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: Container(
+            margin: EdgeInsets.all(context
+                        .watch<PlaysProvider>()
+                        .playsList[
+                            context.watch<PlaysProvider>().answersList.length]
+                        .type ==
                     TypeNumber.Arabigo
-                    ? 25
-                    : 10),
-                child: context
-                    .watch<PlaysProvider>()
-                    .playsList[
-                context.watch<PlaysProvider>().answersList.length]
-                    .type ==
+                ? 25
+                : 10),
+            child: context
+                        .watch<PlaysProvider>()
+                        .playsList[
+                            context.watch<PlaysProvider>().answersList.length]
+                        .type ==
                     TypeNumber.Arabigo
-                    ? _numberArabigo()
-                    : _numberMaya(),
-              ),
-            )
-          ],
-        ));
+                ? _numberArabigo()
+                : _numberMaya(),
+          ),
+        )
+      ],
+    ));
   }
 
   Widget _numberArabigo() {
@@ -131,7 +131,8 @@ class _PlayPageState extends State<PlayPage> {
   }
 
   Widget _arabigoNumbers() {
-    return Center(
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 5),
       child: Wrap(
           spacing: 7,
           runSpacing: 7,
@@ -149,7 +150,8 @@ class _PlayPageState extends State<PlayPage> {
   }
 
   Widget _mayaNumbers() {
-    return Center(
+    return Container(
+        margin: EdgeInsets.symmetric(horizontal: 5),
         child: Wrap(
             spacing: 15,
             runSpacing: 15,
@@ -167,17 +169,23 @@ class _PlayPageState extends State<PlayPage> {
 
   Widget _numWidget() {
     if (context
-        .watch<PlaysProvider>()
-        .playsList[context.watch<PlaysProvider>().answersList.length]
-        .type ==
+            .watch<PlaysProvider>()
+            .playsList[context.watch<PlaysProvider>().answersList.length]
+            .type ==
         TypeNumber.Maya) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [_inputNumberArabigo(), _arabigoNumbers(), _answerButton()],
-      );
+      return Container(
+          margin: EdgeInsets.all(10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _inputNumberArabigo(),
+              _arabigoNumbers(),
+              _answerButton()
+            ],
+          ));
     } else {
       return Container(
-        margin: EdgeInsets.only(top: 5, bottom: 15),
+        margin: EdgeInsets.all(10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [_mayaNumbers()],
@@ -242,7 +250,7 @@ class _PlayPageState extends State<PlayPage> {
                 fontWeight: FontWeight.bold,
                 fontSize: 30,
                 fontStyle: FontStyle.italic),
-              )),
+          )),
           IconButton(
               icon: Icon(Icons.backspace),
               iconSize: 30,
@@ -261,10 +269,7 @@ class _PlayPageState extends State<PlayPage> {
       return Column(
         children: [
           _widgetNumber(),
-          Divider(
-            thickness: 2,
-            color: Colors.grey,
-          ),
+          Container(height: 2, color: Colors.grey),
           _numWidget()
         ],
       );
@@ -279,8 +284,8 @@ class _PlayPageState extends State<PlayPage> {
           ),
           Expanded(
               child: Column(
-                children: [_numWidget()],
-              ))
+            children: [_numWidget()],
+          ))
         ],
       );
     }
@@ -307,10 +312,10 @@ class _PlayPageState extends State<PlayPage> {
 
   Future<bool> _dialogClosePage() async {
     return await showModalBottomSheet<bool>(
-        context: context,
-        elevation: 50,
-        backgroundColor: Colors.transparent,
-        builder: (context) => BottomSheetClosePage()) ??
+            context: context,
+            elevation: 50,
+            backgroundColor: Colors.transparent,
+            builder: (context) => BottomSheetClosePage()) ??
         false;
   }
 }
