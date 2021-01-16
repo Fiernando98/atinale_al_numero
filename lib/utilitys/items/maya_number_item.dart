@@ -16,7 +16,7 @@ class MayaNumberItem extends StatelessWidget {
           return Image.asset("assets/cero_maya.png", color: Colors.white);
         case 1:
           return Image.asset("assets/uno_maya.png",
-              height: 40, color: Colors.white);
+              height: 25, color: Colors.white);
         case 5:
           return Image.asset("assets/cinco_maya.png", color: Colors.white);
         default:
@@ -25,8 +25,8 @@ class MayaNumberItem extends StatelessWidget {
     }
 
     return Button3d(
-      width: 110,
-      height: 110,
+      width: 80,
+      height: 80,
       style: Button3dStyle(
           topColor: Colors.teal[600],
           backColor: Colors.teal[800],
