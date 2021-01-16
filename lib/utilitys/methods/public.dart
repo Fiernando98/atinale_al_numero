@@ -63,24 +63,3 @@ int getArabigoNumber({@required List<List<int>> list}) {
   });
   return num;
 }
-
-List<List<int>> getMayaValue({@required int num}) {
-  List<List<int>> listResults = [];
-  int index = 0;
-  for (int multi in [8000, 400, 20, 1]) {
-    List<int> results = [];
-    for (int value in [5, 1]) {
-      if (num ~/ (value * multi) >= 1) {
-        for (int i = 0; i < num ~/ (value * multi).toInt(); i++) {
-          results.add(value);
-        }
-        num = num % (value * multi);
-      }
-    }
-    if (results.isEmpty && index > 0 && listResults[index - 1].isNotEmpty)
-      results.add(0);
-    listResults.add(results);
-    index++;
-  }
-  return listResults;
-}

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numeracion_maya/models_class/numbers.dart';
 import 'package:numeracion_maya/utilitys/bottomsheets/bottomsheet_close_page.dart';
+import 'package:numeracion_maya/utilitys/bottomsheets/bottomsheet_result.dart';
 import 'package:numeracion_maya/utilitys/items/arabigo_number_item.dart';
 import 'package:numeracion_maya/utilitys/items/maya_number_item.dart';
 import 'package:numeracion_maya/utilitys/languages.dart';
@@ -84,7 +85,7 @@ class _PlayPageState extends State<PlayPage> {
             return ArabigoNumberItem(
                 number: number,
                 onTap: () {
-                  if (inputListNumArabigo.length < 12)
+                  if (inputListNumArabigo.length < 15)
                     setState(() {
                       inputListNumArabigo.add(number);
                     });
@@ -268,8 +269,8 @@ class _PlayPageState extends State<PlayPage> {
             children: [
               IconButton(
                   icon: Icon((inputListNumMaya.indexOf(xList) == indexMaya)
-                      ? Icons.edit
-                      : Icons.keyboard_arrow_right),
+                      ? Icons.double_arrow_sharp
+                      : Icons.touch_app),
                   onPressed: () {
                     setState(() {
                       indexMaya = inputListNumMaya.indexOf(xList);
@@ -483,8 +484,7 @@ class _PlayPageState extends State<PlayPage> {
   }
 
   void validateAnswer() async {
-    if (inputListNumArabigo.isEmpty &&
-        (inputListNumMaya.length == 1 && inputListNumMaya[0].isEmpty)) {
+    if (inputListNumArabigo.isEmpty && !mayaListIsValid()) {
       snackErrorMessage(
           message: getTranslation[getLanguage(context)]['NumberCannotBeNull'],
           scaffoldKey: _scaffoldKey);
@@ -497,14 +497,30 @@ class _PlayPageState extends State<PlayPage> {
         answerNum = int.tryParse(inputListNumArabigo.join());
       }
 
-      setState(() {
-        inputListNumMaya.clear();
-        inputListNumMaya = [[]];
-        indexMaya = 0;
-        inputListNumArabigo.clear();
+      showModalBottomSheet<bool>(
+              context: context,
+              elevation: 50,
+              backgroundColor: Colors.transparent,
+              builder: (sheetcontext) => BottomSheetResult(
+                  answer: answerNum,
+                  num: context.read<PlaysProvider>().getCurrentPlay().num))
+          .whenComplete(() {
+        setState(() {
+          inputListNumMaya.clear();
+          inputListNumMaya = [[]];
+          indexMaya = 0;
+          inputListNumArabigo.clear();
+        });
+        context.read<PlaysProvider>().addAnswer(answer: answerNum);
       });
-      context.read<PlaysProvider>().addAnswer(answer: answerNum);
     }
+  }
+
+  bool mayaListIsValid() {
+    for (List<int> xList in inputListNumMaya) {
+      if (xList.isEmpty) return false;
+    }
+    return true;
   }
 
   void _gameCompleted() async {

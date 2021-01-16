@@ -18,7 +18,9 @@ Map<String, Map<String, String>> getTranslation = {
     "NumberCannotBeNull": "The Number Cannot Be Null",
     "Score": "Score",
     "YourAnswer": "Your Answer",
-    "GoBackToMenu": "Go Back to the Menu"
+    "GoBackToMenu": "Go Back to the Menu",
+    "Correct": "Correct",
+    "Incorrect": "Incorrect"
   },
   "es": {
     "Welcome": "Bienvenido",
@@ -32,6 +34,8 @@ Map<String, Map<String, String>> getTranslation = {
     "NumberCannotBeNull": "El Número no puede ser Nulo",
     "Score": "Puntuación",
     "YourAnswer": "Tu Respuesta",
-    "GoBackToMenu": "Volver al Menú"
+    "GoBackToMenu": "Volver al Menú",
+    "Correct": "Correcto",
+    "Incorrect": "Incorrecto"
   }
 };
