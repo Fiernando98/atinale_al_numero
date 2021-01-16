@@ -173,24 +173,27 @@ class _PlayPageState extends State<PlayPage> {
             .playsList[context.watch<PlaysProvider>().answersList.length]
             .type ==
         TypeNumber.Maya) {
-      return Container(
-          margin: EdgeInsets.all(10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _inputNumberArabigo(),
-              _arabigoNumbers(),
-              _answerButton()
-            ],
-          ));
+      return SingleChildScrollView(
+        child: Container(
+            margin: EdgeInsets.all(10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _inputNumberArabigo(),
+                _arabigoNumbers(),
+                _answerButton()
+              ],
+            )),
+      );
     } else {
-      return Container(
+      return SingleChildScrollView(
+          child: Container(
         margin: EdgeInsets.all(10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [_mayaNumbers()],
         ),
-      );
+      ));
     }
   }
 
