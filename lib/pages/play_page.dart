@@ -1,3 +1,4 @@
+import 'package:button3d/button3d.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numeracion_maya/models_class/maya_number.dart';
@@ -5,6 +6,7 @@ import 'package:numeracion_maya/models_class/numbers.dart';
 import 'package:numeracion_maya/utilitys/bottomsheets/bottomsheet_close_page.dart';
 import 'package:numeracion_maya/utilitys/items/arabigo_number_item.dart';
 import 'package:numeracion_maya/utilitys/items/maya_number_item.dart';
+import 'package:numeracion_maya/utilitys/languages.dart';
 import 'package:numeracion_maya/utilitys/methods/public.dart';
 import 'package:numeracion_maya/utilitys/providers/plays_providers.dart';
 import 'package:provider/provider.dart';
@@ -23,31 +25,31 @@ class _PlayPageState extends State<PlayPage> {
   Widget _widgetNumber() {
     return Expanded(
         child: CustomScrollView(
-      physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-      slivers: [
-        SliverFillRemaining(
-          hasScrollBody: false,
-          child: Container(
-            margin: EdgeInsets.all(context
-                        .watch<PlaysProvider>()
-                        .playsList[
-                            context.watch<PlaysProvider>().answersList.length]
-                        .type ==
+          physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Container(
+                margin: EdgeInsets.all(context
+                    .watch<PlaysProvider>()
+                    .playsList[
+                context.watch<PlaysProvider>().answersList.length]
+                    .type ==
                     TypeNumber.Arabigo
-                ? 25
-                : 10),
-            child: context
-                        .watch<PlaysProvider>()
-                        .playsList[
-                            context.watch<PlaysProvider>().answersList.length]
-                        .type ==
+                    ? 25
+                    : 10),
+                child: context
+                    .watch<PlaysProvider>()
+                    .playsList[
+                context.watch<PlaysProvider>().answersList.length]
+                    .type ==
                     TypeNumber.Arabigo
-                ? _numberArabigo()
-                : _numberMaya(),
-          ),
-        )
-      ],
-    ));
+                    ? _numberArabigo()
+                    : _numberMaya(),
+              ),
+            )
+          ],
+        ));
   }
 
   Widget _numberArabigo() {
@@ -60,23 +62,19 @@ class _PlayPageState extends State<PlayPage> {
   }
 
   Widget _numberMaya() {
-    MayaNumber mayaNumber = getMayaNumber(
+    MayaNumber mayaNumber = getMayaValue(
         num: context
             .watch<PlaysProvider>()
             .playsList[context.watch<PlaysProvider>().answersList.length]
             .num);
     List<Widget> widgetsList = [];
-    for (List<int> list in [
-      mayaNumber.x8000,
-      mayaNumber.x400,
-      mayaNumber.x20,
-      mayaNumber.x
-    ]) {
+    [mayaNumber.x8000, mayaNumber.x400, mayaNumber.x20, mayaNumber.x]
+        .forEach((list) {
       if (list.isNotEmpty) {
         List<Widget> xList = [];
         if (list.contains(1)) {
           List<Widget> rowsList = [];
-          for (int value in list.where((element) => element == 1).toList()) {
+          list.where((element) => element == 1).toList().forEach((element) {
             rowsList.add(Container(
               margin: EdgeInsets.all(3),
               child: Image.asset("assets/uno_maya.png",
@@ -85,7 +83,7 @@ class _PlayPageState extends State<PlayPage> {
                       ? Colors.white
                       : Colors.black),
             ));
-          }
+          });
           xList.add(Container(
             margin: EdgeInsets.all(3),
             child: Row(
@@ -95,7 +93,7 @@ class _PlayPageState extends State<PlayPage> {
           ));
         }
         if (list.contains(5)) {
-          for (int value in list.where((element) => element == 5).toList()) {
+          list.where((element) => element == 5).toList().forEach((element) {
             xList.add(Container(
               margin: EdgeInsets.all(3),
               child: Image.asset("assets/cinco_maya.png",
@@ -104,7 +102,7 @@ class _PlayPageState extends State<PlayPage> {
                       ? Colors.white
                       : Colors.black),
             ));
-          }
+          });
         }
         if (list.contains(0)) {
           xList.add(Container(
@@ -125,7 +123,7 @@ class _PlayPageState extends State<PlayPage> {
           child: Column(children: xList),
         ));
       }
-    }
+    });
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: widgetsList,
@@ -133,8 +131,7 @@ class _PlayPageState extends State<PlayPage> {
   }
 
   Widget _arabigoNumbers() {
-    return Container(
-      margin: EdgeInsets.only(bottom: 15),
+    return Center(
       child: Wrap(
           spacing: 7,
           runSpacing: 7,
@@ -142,7 +139,7 @@ class _PlayPageState extends State<PlayPage> {
             return ArabigoNumberItem(
                 number: number,
                 onTap: () {
-                  if (inputListNumArabigo.length < 10)
+                  if (inputListNumArabigo.length < 12)
                     setState(() {
                       inputListNumArabigo.add(number);
                     });
@@ -152,8 +149,7 @@ class _PlayPageState extends State<PlayPage> {
   }
 
   Widget _mayaNumbers() {
-    return Container(
-        margin: EdgeInsets.only(bottom: 15),
+    return Center(
         child: Wrap(
             spacing: 15,
             runSpacing: 15,
@@ -161,7 +157,7 @@ class _PlayPageState extends State<PlayPage> {
               return MayaNumberItem(
                   number: number,
                   onTap: () {
-                    if (inputListNumArabigo.length < 10)
+                    if (inputListNumArabigo.length < 15)
                       setState(() {
                         inputListNumArabigo.add(number);
                       });
@@ -171,23 +167,68 @@ class _PlayPageState extends State<PlayPage> {
 
   Widget _numWidget() {
     if (context
-            .watch<PlaysProvider>()
-            .playsList[context.watch<PlaysProvider>().answersList.length]
-            .type ==
+        .watch<PlaysProvider>()
+        .playsList[context.watch<PlaysProvider>().answersList.length]
+        .type ==
         TypeNumber.Maya) {
       return Column(
-        children: [_inputNumberArabigo(), _arabigoNumbers()],
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [_inputNumberArabigo(), _arabigoNumbers(), _answerButton()],
       );
     } else {
-      return Column(
-        children: [_mayaNumbers()],
+      return Container(
+        margin: EdgeInsets.only(top: 5, bottom: 15),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [_mayaNumbers()],
+        ),
       );
     }
   }
 
+  Widget _answerButton() {
+    return Container(
+      margin: EdgeInsets.all(10),
+      child: Button3d(
+        width: 500,
+        height: 80,
+        style: Button3dStyle(
+            topColor: Colors.blueAccent[200],
+            backColor: Colors.blueAccent[400],
+            z: 10,
+            tappedZ: 5,
+            borderRadius: BorderRadius.circular(30)),
+        onPressed: () {},
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                getTranslation[getLanguage(context)]['Answer'],
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25),
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 10),
+                child: Icon(
+                  Icons.check,
+                  color: Colors.white,
+                  size: 27,
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _inputNumberArabigo() {
     return Container(
-      margin: EdgeInsets.all(15),
+      margin: EdgeInsets.only(top: 7, bottom: 15, right: 10, left: 10),
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
           border: Border.all(color: Colors.grey, width: 3),
@@ -199,9 +240,9 @@ class _PlayPageState extends State<PlayPage> {
             "${inputListNumArabigo.join()}",
             style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 40,
+                fontSize: 30,
                 fontStyle: FontStyle.italic),
-          )),
+              )),
           IconButton(
               icon: Icon(Icons.backspace),
               iconSize: 30,
@@ -218,7 +259,6 @@ class _PlayPageState extends State<PlayPage> {
   Widget _bodyPlay() {
     if (MediaQuery.of(context).orientation == Orientation.portrait) {
       return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           _widgetNumber(),
           Divider(
@@ -239,8 +279,8 @@ class _PlayPageState extends State<PlayPage> {
           ),
           Expanded(
               child: Column(
-            children: [_numWidget()],
-          ))
+                children: [_numWidget()],
+              ))
         ],
       );
     }
@@ -267,10 +307,10 @@ class _PlayPageState extends State<PlayPage> {
 
   Future<bool> _dialogClosePage() async {
     return await showModalBottomSheet<bool>(
-            context: context,
-            elevation: 50,
-            backgroundColor: Colors.transparent,
-            builder: (context) => BottomSheetClosePage()) ??
+        context: context,
+        elevation: 50,
+        backgroundColor: Colors.transparent,
+        builder: (context) => BottomSheetClosePage()) ??
         false;
   }
 }

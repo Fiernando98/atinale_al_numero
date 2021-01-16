@@ -13,7 +13,8 @@ Map<String, Map<String, String>> getTranslation = {
     "Plays": "Plays",
     "Cancel": "Cancel",
     "Close": "Close",
-    "DoYouWantToCloseThisPage": "Do You Want To Close This Page ?"
+    "DoYouWantToCloseThisPage": "Do You Want To Close This Page ?",
+    "Answer": "Answer"
   },
   "es": {
     "Welcome": "Bienvenido",
@@ -22,6 +23,7 @@ Map<String, Map<String, String>> getTranslation = {
     "Plays": "Jugadas",
     "Cancel": "Cancelar",
     "Close": "Cerrar",
-    "DoYouWantToCloseThisPage": "¿Quiere Cerrar esta Página?"
+    "DoYouWantToCloseThisPage": "¿Quiere Cerrar esta Página?",
+    "Answer": "Contestar"
   }
 };

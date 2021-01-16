@@ -11,8 +11,8 @@ class ArabigoNumberItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Button3d(
-      width: 70,
-      height: 70,
+      width: 60,
+      height: 60,
       style: Button3dStyle(
           topColor: Colors.teal[500],
           backColor: Colors.teal[800],
@@ -21,7 +21,7 @@ class ArabigoNumberItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(30)),
       onPressed: onTap,
       child: Padding(
-        padding: EdgeInsets.all(15),
+        padding: EdgeInsets.all(10),
         child: Text(
           "$number",
           textAlign: TextAlign.center,

@@ -7,7 +7,7 @@ class BottomSheetClosePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-            color: Colors.red[500],
+            color: Colors.blueAccent[700],
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(40), topRight: Radius.circular(40))),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -19,7 +19,7 @@ class BottomSheetClosePage extends StatelessWidget {
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(30)))),
           Container(
-            margin: EdgeInsets.only(bottom: 5),
+            margin: EdgeInsets.only(bottom: 7),
             child: Text(
                 getTranslation[getLanguage(context)]
                     ['DoYouWantToCloseThisPage'],

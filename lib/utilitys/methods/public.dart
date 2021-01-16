@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numeracion_maya/models_class/maya_number.dart';
@@ -15,9 +17,8 @@ void snackMessage(
   ScaffoldMessenger.of(scaffoldKey.currentContext).showSnackBar(snackBar);
 }
 
-void snackErrorMessage(
-    {@required String message,
-    @required GlobalKey<ScaffoldState> scaffoldKey}) {
+void snackErrorMessage({@required String message,
+  @required GlobalKey<ScaffoldState> scaffoldKey}) {
   SnackBar snackBar = SnackBar(
       duration: Duration(seconds: 3),
       backgroundColor: Colors.red[700],
@@ -81,7 +82,42 @@ MayaNumber convertirMaya({int num}) {
   return MayaNumber(x8000: x8000, x400: x400, x20: x20, x: x);
 }
 
-MayaNumber getMayaNumber({@required int num}) {
+List<List<int>> getMayaNumber({@required int num}) {
+  List<int> xPows = [1];
+  while (xPows.first < num) {
+    xPows.insert(0, xPows.first * 20);
+  }
+  List<List<int>> listResults = [];
+  int index = 0;
+  xPows.forEach((multi) {
+    List<int> results = [];
+    [5, 1].forEach((value) {
+      if (num ~/ (value * multi) >= 1) {
+        for (int i = 0; i < num ~/ (value * multi); i++) {
+          results.add(value);
+        }
+        num = num % (value * multi);
+      }
+    });
+    if (results.isEmpty && index > 0 && listResults[index - 1].isNotEmpty)
+      results.add(0);
+    listResults.add(results);
+    index++;
+  });
+  listResults.removeWhere((xList) => xList.isEmpty);
+  return listResults;
+}
+
+int getArabigoNumber({@required List<List<int>> list}) {
+  int num = 0;
+  list.reversed.toList().forEach((xList) {
+    xList.forEach((listNum) =>
+        num += (listNum * pow(20, list.reversed.toList().indexOf(xList))));
+  });
+  return num;
+}
+
+MayaNumber getMayaValue({@required int num}) {
   List<List<int>> listResults = [];
   int index = 0;
   for (int multi in [8000, 400, 20, 1]) {
