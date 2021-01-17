@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 
 class Difficulty {
   final String name;
-  final int numMax;
   final int numMin;
+  final int numMax;
 
   Difficulty(
-      {@required this.name, @required this.numMax, @required this.numMin});
+      {@required this.name, @required this.numMin, @required this.numMax});
 
   @override
   String toString() {
-    return '\nDifficulty{name: $name, numMax: $numMax, numMin: $numMin}';
+    return '\nDifficulty{name: $name, numMin: $numMin, numMax: $numMax,}';
   }
 }

@@ -22,7 +22,15 @@ Map<String, Map<String, String>> getTranslation = {
     "Correct": "Correct",
     "Incorrect": "Incorrect",
     "SelectDifficulty": "Select Difficulty",
-    "Beginner": "Beginner"
+    "Beginner": "Beginner",
+    "Easy": "Easy",
+    "Normal": "Normal",
+    "Hard": "Hard",
+    "VeryHard": "VeryHard",
+    "Insane": "Insane",
+    "Legend": "Legend",
+    "OkWeKnowYouAreGoingtoUseYourCalculator":
+        "Ok We Know You Are Going to Use Your Calculator"
   },
   "es": {
     "Welcome": "Bienvenido",
@@ -40,6 +48,14 @@ Map<String, Map<String, String>> getTranslation = {
     "Correct": "Correcto",
     "Incorrect": "Incorrecto",
     "SelectDifficulty": "Seleccionar Dificultad",
-    "Beginner": "Principiante"
+    "Beginner": "Principiante",
+    "Easy": "Fácil",
+    "Normal": "Normal",
+    "Hard": "Difícil",
+    "VeryHard": "Muy Difícil",
+    "Insane": "Insano",
+    "Legend": "Legendario",
+    "OkWeKnowYouAreGoingtoUseYourCalculator":
+        "Ok, Sabemos Que Vas a Usar Tu Calculadora"
   }
 };

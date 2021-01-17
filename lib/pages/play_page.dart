@@ -220,7 +220,7 @@ class _PlayPageState extends State<PlayPage> {
                   }),
               Expanded(
                   child: Container(
-                    padding: EdgeInsets.all(20),
+                padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey, width: 3),
                     borderRadius: BorderRadius.circular(20)),

@@ -25,8 +25,44 @@ class _SelectDifficultyState extends State<SelectDifficulty> {
     List<Difficulty> listDifficult = [
       Difficulty(
           name: getTranslation[getLanguage(context)]['Beginner'],
-          numMax: 5,
-          numMin: 0)
+          numMin: 0,
+          numMax: 10),
+      Difficulty(
+        name: getTranslation[getLanguage(context)]['Easy'],
+        numMin: 10,
+        numMax: 70,
+      ),
+      Difficulty(
+        name: getTranslation[getLanguage(context)]['Normal'],
+        numMin: 70,
+        numMax: 300,
+      ),
+      Difficulty(
+        name: getTranslation[getLanguage(context)]['Hard'],
+        numMin: 300,
+        numMax: 1000,
+      ),
+      Difficulty(
+        name: getTranslation[getLanguage(context)]['VeryHard'],
+        numMin: 1000,
+        numMax: 7000,
+      ),
+      Difficulty(
+        name: getTranslation[getLanguage(context)]['Insane'],
+        numMin: 7000,
+        numMax: 15000,
+      ),
+      Difficulty(
+        name: getTranslation[getLanguage(context)]['Legend'],
+        numMin: 15000,
+        numMax: 100000,
+      ),
+      Difficulty(
+        name: getTranslation[getLanguage(context)]
+            ['OkWeKnowYouAreGoingtoUseYourCalculator'],
+        numMin: 100000,
+        numMax: 1000000,
+      )
     ];
 
     return SafeArea(

@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 
 class DifficultItem extends StatelessWidget {
   final String name;
-  final int numMax;
   final int numMin;
+  final int numMax;
   final Function onTapPlay;
 
   DifficultItem(
       {@required this.name,
-      @required this.numMax,
       @required this.numMin,
+      @required this.numMax,
       this.onTapPlay});
 
   @override
