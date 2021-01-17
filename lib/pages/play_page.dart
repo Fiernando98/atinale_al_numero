@@ -6,6 +6,7 @@ import 'package:numeracion_maya/utilitys/bottomsheets/bottomsheet_close_page.dar
 import 'package:numeracion_maya/utilitys/bottomsheets/bottomsheet_result.dart';
 import 'package:numeracion_maya/utilitys/items/arabigo_number_item.dart';
 import 'package:numeracion_maya/utilitys/items/maya_number_item.dart';
+import 'package:numeracion_maya/utilitys/items/maya_row_item.dart';
 import 'package:numeracion_maya/utilitys/languages.dart';
 import 'package:numeracion_maya/utilitys/methods/public.dart';
 import 'package:numeracion_maya/utilitys/providers/plays_providers.dart';
@@ -33,11 +34,7 @@ class _PlayPageState extends State<PlayPage> {
             SliverFillRemaining(
               hasScrollBody: false,
               child: Container(
-                margin: EdgeInsets.all(
-                    context.watch<PlaysProvider>().getCurrentPlay().type ==
-                            TypeNumber.Arabigo
-                        ? 20
-                        : 10),
+                margin: EdgeInsets.all(10),
                 child: context.watch<PlaysProvider>().getCurrentPlay().type ==
                         TypeNumber.Arabigo
                     ? _numberArabigo()
@@ -65,9 +62,9 @@ class _PlayPageState extends State<PlayPage> {
 
   Widget _numberMaya({@required List<List<int>> mayaNumber}) {
     List<Widget> widgetsList = [];
-    mayaNumber.forEach((list) {
-      if (list.isEmpty) return Container();
-      widgetsList.add(_rowNumberMaya(list: list));
+    mayaNumber.forEach((xList) {
+      if (xList.isEmpty) return Container();
+      widgetsList.add(MayaRowItem(listNumbers: xList));
     });
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -77,7 +74,7 @@ class _PlayPageState extends State<PlayPage> {
 
   Widget _arabigoNumbers() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5),
+      margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
       child: Wrap(
           spacing: 7,
           runSpacing: 7,
@@ -133,7 +130,7 @@ class _PlayPageState extends State<PlayPage> {
       return Expanded(
           flex: 1,
           child: Container(
-              margin: EdgeInsets.all(10),
+              margin: EdgeInsets.all(5),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -149,7 +146,7 @@ class _PlayPageState extends State<PlayPage> {
       return Expanded(
           flex: 2,
           child: Container(
-            margin: EdgeInsets.all(10),
+            margin: EdgeInsets.all(5),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -205,61 +202,6 @@ class _PlayPageState extends State<PlayPage> {
     );
   }
 
-  Widget _rowNumberMaya({@required List<int> list}) {
-    if (list.isEmpty) return Container();
-    List<Widget> xList = [];
-    if (list.contains(1)) {
-      List<Widget> rowsList = [];
-      list.where((element) => element == 1).toList().forEach((element) {
-        rowsList.add(Container(
-          margin: EdgeInsets.all(3),
-          child: Image.asset("assets/uno_maya.png",
-              height: 15,
-              color: Theme.of(context).brightness == Brightness.dark
-                  ? Colors.white
-                  : Colors.black),
-        ));
-      });
-      xList.add(Container(
-        margin: EdgeInsets.all(3),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: rowsList,
-        ),
-      ));
-    }
-    if (list.contains(5)) {
-      list.where((element) => element == 5).toList().forEach((element) {
-        xList.add(Container(
-          margin: EdgeInsets.all(3),
-          child: Image.asset("assets/cinco_maya.png",
-              height: 12,
-              color: Theme.of(context).brightness == Brightness.dark
-                  ? Colors.white
-                  : Colors.black),
-        ));
-      });
-    }
-    if (list.contains(0)) {
-      xList.add(Container(
-        margin: EdgeInsets.all(3),
-        child: Image.asset("assets/cero_maya.png",
-            height: 25,
-            color: Theme.of(context).brightness == Brightness.dark
-                ? Colors.white
-                : Colors.black),
-      ));
-    }
-    return Container(
-      margin: EdgeInsets.all(5),
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey, width: 3),
-          borderRadius: BorderRadius.circular(20)),
-      child: Column(children: xList),
-    );
-  }
-
   Widget _inputNumberMaya() {
     return Container(
       margin: EdgeInsets.only(bottom: 10),
@@ -278,24 +220,26 @@ class _PlayPageState extends State<PlayPage> {
                   }),
               Expanded(
                   child: Container(
-                padding: EdgeInsets.all(20),
+                    padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey, width: 3),
                     borderRadius: BorderRadius.circular(20)),
-                child: _rowNumberMaya(list: xList),
+                child: MayaRowItem(listNumbers: xList),
               )),
               (inputListNumMaya.indexOf(xList) == indexMaya)
                   ? IconButton(
                       icon: Icon(Icons.backspace),
                       onPressed: () {
-                        setState(() {
-                          xList.removeLast();
-                        });
+                        if (xList.isNotEmpty)
+                          setState(() {
+                            xList.removeLast();
+                          });
                       })
                   : IconButton(
                       icon: Icon(Icons.delete),
                       onPressed: () {
                         setState(() {
+                          indexMaya = 0;
                           inputListNumMaya.remove(xList);
                         });
                       })
@@ -327,7 +271,7 @@ class _PlayPageState extends State<PlayPage> {
 
   Widget _inputNumberArabigo() {
     return Container(
-      margin: EdgeInsets.only(top: 7, bottom: 15, right: 10, left: 10),
+      margin: EdgeInsets.only(top: 7, right: 10, left: 10),
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
           border: Border.all(color: Colors.grey, width: 3),
@@ -346,9 +290,10 @@ class _PlayPageState extends State<PlayPage> {
               icon: Icon(Icons.backspace),
               iconSize: 30,
               onPressed: () {
-                setState(() {
-                  inputListNumArabigo.removeLast();
-                });
+                if (inputListNumArabigo.isNotEmpty)
+                  setState(() {
+                    inputListNumArabigo.removeLast();
+                  });
               })
         ],
       ),
@@ -373,7 +318,7 @@ class _PlayPageState extends State<PlayPage> {
             thickness: 2,
             color: Colors.grey,
           ),
-          Expanded(flex: 2, child: _numWidget())
+          _numWidget()
         ],
       );
     }
@@ -464,9 +409,12 @@ class _PlayPageState extends State<PlayPage> {
                 ? Stack(
                     children: [
                       _bodyPlay(),
-                      IconButton(
-                          icon: Icon(Icons.close),
-                          onPressed: Navigator.of(context).maybePop)
+                      Container(
+                        margin: EdgeInsets.all(5),
+                        child: IconButton(
+                            icon: Icon(Icons.close),
+                            onPressed: Navigator.of(context).maybePop),
+                      )
                     ],
                   )
                 : _scoreBody(),

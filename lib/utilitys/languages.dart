@@ -20,7 +20,9 @@ Map<String, Map<String, String>> getTranslation = {
     "YourAnswer": "Your Answer",
     "GoBackToMenu": "Go Back to the Menu",
     "Correct": "Correct",
-    "Incorrect": "Incorrect"
+    "Incorrect": "Incorrect",
+    "SelectDifficulty": "Select Difficulty",
+    "Beginner": "Beginner"
   },
   "es": {
     "Welcome": "Bienvenido",
@@ -36,6 +38,8 @@ Map<String, Map<String, String>> getTranslation = {
     "YourAnswer": "Tu Respuesta",
     "GoBackToMenu": "Volver al Menú",
     "Correct": "Correcto",
-    "Incorrect": "Incorrecto"
+    "Incorrect": "Incorrecto",
+    "SelectDifficulty": "Seleccionar Dificultad",
+    "Beginner": "Principiante"
   }
 };

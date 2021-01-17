@@ -19,7 +19,6 @@ class PlaysProvider with ChangeNotifier {
 
   void addAnswer({@required int answer}) {
     _answersList.add(answer);
-    print(_answersList);
     notifyListeners();
   }
 

@@ -1,13 +1,9 @@
-import 'dart:math';
 
 import 'package:button3d/button3d.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:numeracion_maya/models_class/numbers.dart';
-import 'package:numeracion_maya/pages/play_page.dart';
+import 'package:numeracion_maya/pages/select%20difficulty.dart';
 import 'package:numeracion_maya/utilitys/languages.dart';
-import 'package:numeracion_maya/utilitys/providers/plays_providers.dart';
-import 'package:provider/provider.dart';
 
 class MainMenu extends StatefulWidget {
   @override
@@ -160,16 +156,11 @@ class _MainMenuState extends State<MainMenu> {
   }
 
   void _generatePlays() {
-    List<Numbers> playsList = [];
-    while (playsList.length != _count) {
-      playsList.add(Numbers(
-          num: Random().nextInt(400),
-          type: TypeNumber.values[Random().nextInt(2)]));
+    if (_count > 0) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (context) => SelectDifficulty(count: _count)),
+      );
     }
-    context.read<PlaysProvider>().makePlays(newList: playsList);
-
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => PlayPage()),
-    );
   }
 }
