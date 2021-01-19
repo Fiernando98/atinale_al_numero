@@ -30,7 +30,8 @@ Map<String, Map<String, String>> getTranslation = {
     "Insane": "Insane",
     "Legend": "Legend",
     "OkWeKnowYouAreGoingtoUseYourCalculator":
-        "Ok We Know You Are Going to Use Your Calculator"
+        "Ok We Know You Are Going to Use Your Calculator",
+    "TakeYourTimeDontWorry": "Take Your Time, Don't Worry"
   },
   "es": {
     "Welcome": "Bienvenido",
@@ -56,6 +57,7 @@ Map<String, Map<String, String>> getTranslation = {
     "Insane": "Insano",
     "Legend": "Legendario",
     "OkWeKnowYouAreGoingtoUseYourCalculator":
-        "Ok, Sabemos Que Vas a Usar Tu Calculadora"
+        "Ok, Sabemos Que Vas a Usar Tu Calculadora",
+    "TakeYourTimeDontWorry": "Tómate Tu Tiempo, No Te Preocupes"
   }
 };

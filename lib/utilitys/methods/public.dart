@@ -35,7 +35,6 @@ List<List<int>> getMayaNumber({@required int num}) {
     xPows.insert(0, xPows.first * 20);
   }
   List<List<int>> listResults = [];
-  int index = 0;
   xPows.forEach((multi) {
     List<int> results = [];
     [5, 1].forEach((value) {
@@ -46,12 +45,12 @@ List<List<int>> getMayaNumber({@required int num}) {
         num = num % (value * multi);
       }
     });
-    if (results.isEmpty && index > 0 && listResults[index - 1].isNotEmpty)
-      results.add(0);
+    if (results.isEmpty) results.add(0);
     listResults.add(results);
-    index++;
   });
-  listResults.removeWhere((xList) => xList.isEmpty);
+  while (listResults[0].contains(0) && listResults.length > 1) {
+    listResults.removeAt(0);
+  }
   return listResults;
 }
 

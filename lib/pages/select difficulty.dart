@@ -62,6 +62,11 @@ class _SelectDifficultyState extends State<SelectDifficulty> {
             ['OkWeKnowYouAreGoingtoUseYourCalculator'],
         numMin: 100000,
         numMax: 1000000,
+      ),
+      Difficulty(
+        name: getTranslation[getLanguage(context)]['TakeYourTimeDontWorry'],
+        numMin: 1000000,
+        numMax: 2000000,
       )
     ];
 

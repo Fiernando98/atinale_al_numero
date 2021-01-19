@@ -327,13 +327,6 @@ class _PlayPageState extends State<PlayPage> {
   Widget _scoreBody() {
     return Column(
       children: [
-        Center(
-          child: Text(
-            getTranslation[getLanguage(context)]['Score'],
-            textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50),
-          ),
-        ),
         Expanded(
             child: CustomScrollView(
           physics:
@@ -405,6 +398,21 @@ class _PlayPageState extends State<PlayPage> {
         child: SafeArea(
           child: Scaffold(
             key: _scaffoldKey,
+            appBar: (context.watch<PlaysProvider>().getCurrentPlay()) != null
+                ? null
+                : AppBar(
+                    title: Text(
+                      getTranslation[getLanguage(context)]['Score'],
+                      style: TextStyle(
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? Colors.white
+                              : Colors.black),
+                    ),
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    centerTitle: true,
+                    leading: Container(),
+                  ),
             body: (context.watch<PlaysProvider>().getCurrentPlay()) != null
                 ? Stack(
                     children: [
