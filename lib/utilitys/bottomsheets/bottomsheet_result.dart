@@ -35,7 +35,7 @@ class BottomSheetResult extends StatelessWidget {
           ),
           Container(
             margin: EdgeInsets.only(top: 5, bottom: 15),
-            child: Text("${answer != num ? "$answer / " : ""}${num}",
+            child: Text("${answer != num ? "$answer ≠ " : ""}$num",
                 style: TextStyle(color: Colors.white, fontSize: 40)),
           ),
         ]));
